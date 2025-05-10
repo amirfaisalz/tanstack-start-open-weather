@@ -63,17 +63,27 @@ export const Route = createFileRoute("/")({
   component: () => (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ">
           <div className="container mx-auto py-6 px-4 md:px-6 space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-24 w-full">
+              <div className="flex-1">
+                <Skeleton className="h-8 bg-green-200 mb-4" />
+                <Skeleton className="h-8 bg-green-200" />
+              </div>
+
+              <Skeleton className="h-8 w-96 bg-green-200" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[30rem]">
               {[...Array(3)].map((_, i) => (
-                <Card key={i}>
+                <Card key={i} className="border-green-300">
                   <CardHeader>
                     <Skeleton className="h-8 w-3/4 bg-green-200" />
                     <Skeleton className="h-4 w-1/2 bg-green-200" />
+                    <Skeleton className="h-4 w-1/2 bg-green-200" />
                   </CardHeader>
                   <CardContent>
-                    <Skeleton className="h-40 w-full bg-green-200" />
+                    <Skeleton className="h-80 w-full bg-green-200" />
                   </CardContent>
                 </Card>
               ))}
@@ -85,7 +95,6 @@ export const Route = createFileRoute("/")({
       <Home />
     </Suspense>
   ),
-  ssr: false,
 });
 
 function Home() {
@@ -96,7 +105,7 @@ function Home() {
   };
 
   // data by user locations
-  const { data, isLoading, error, refetch } = useSuspenseQuery(
+  const { data, error, refetch } = useSuspenseQuery(
     getAirQualityOptions(location)
   );
   const { aqData, locationData } = data;
